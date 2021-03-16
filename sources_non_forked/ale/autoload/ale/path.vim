@@ -24,6 +24,14 @@ function! ale#path#Simplify(path) abort
     return substitute(simplify(l:win_path), '^\\\+', '\', 'g') " no-custom-checks
 endfunction
 
+" Simplify a path without a Windows drive letter.
+" This function can be used for checking if paths are equal.
+function! ale#path#RemoveDriveLetter(path) abort
+    return has('win32') && a:path[1:2] is# ':\'
+    \   ? ale#path#Simplify(a:path[2:])
+    \   : ale#path#Simplify(a:path)
+endfunction
+
 " Given a buffer and a filename, find the nearest file by searching upwards
 " through the paths relative to the given buffer.
 function! ale#path#FindNearestFile(buffer, filename) abort
@@ -54,14 +62,14 @@ function! ale#path#FindNearestDirectory(buffer, directory_name) abort
     return ''
 endfunction
 
-" Given a buffer, a string to search for, an a global fallback for when
+" Given a buffer, a string to search for, and a global fallback for when
 " the search fails, look for a file in parent paths, and if that fails,
 " use the global fallback path instead.
 function! ale#path#ResolveLocalPath(buffer, search_string, global_fallback) abort
     " Search for a locally installed file first.
     let l:path = ale#path#FindNearestFile(a:buffer, a:search_string)
 
-    " If the serach fails, try the global executable instead.
+    " If the search fails, try the global executable instead.
     if empty(l:path)
         let l:path = a:global_fallback
     endif
@@ -74,15 +82,19 @@ endfunction
 function! ale#path#CdString(directory) abort
     if has('win32')
         return 'cd /d ' . ale#Escape(a:directory) . ' && '
-    else
-        return 'cd ' . ale#Escape(a:directory) . ' && '
     endif
+
+    return 'cd ' . ale#Escape(a:directory) . ' && '
 endfunction
 
 " Output 'cd <buffer_filename_directory> && '
 " This function can be used changing the directory for a linter command.
 function! ale#path#BufferCdString(buffer) abort
-    return ale#path#CdString(fnamemodify(bufname(a:buffer), ':p:h'))
+    if has('win32')
+        return 'cd /d %s:h && '
+    endif
+
+    return 'cd %s:h && '
 endfunction
 
 " Return 1 if a path is an absolute path.
@@ -95,7 +107,7 @@ function! ale#path#IsAbsolute(filename) abort
     return a:filename[:0] is# '/' || a:filename[1:2] is# ':\'
 endfunction
 
-let s:temp_dir = ale#path#Simplify(fnamemodify(ale#util#Tempname(), ':h'))
+let s:temp_dir = ale#path#Simplify(fnamemodify(ale#util#Tempname(), ':h:h'))
 
 " Given a filename, return 1 if the file represents some temporary file
 " created by Vim.
