@@ -30,6 +30,13 @@ call vundle#begin()
 " Plugin 'user/L9', {'name': 'newL9'}
 
 Plugin 'aperezdc/vim-template'
+" Add icons to your Plugins
+Plugin 'ryanoasis/vim-devicons'
+" This plugin adds Go language support 
+Plugin 'fatih/vim-go'
+Plugin 'artur-shaik/vim-javacomplete2'
+Plugin 'autozimu/LanguageClient-neovim'
+Plugin 'junegunn/fzf'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
