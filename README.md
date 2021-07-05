@@ -2,8 +2,8 @@
 
 # Introduction
 This repository forked from [amix/vimrc](https://github.com/amix/vimrc.git), I have add some features listed as follow:
-* integrade vundle
-* todo
+* integrade [vim-plug](https://github.com/junegunn/vim-plug)
+* add some fonts
 
 
 # The Ultimate vimrc

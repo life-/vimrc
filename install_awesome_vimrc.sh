@@ -3,12 +3,11 @@ set -e
 
 cd ~/.vim_runtime
 
-echo "Installing vundle"
-plugin_dir="${HOME}/.vim_runtime/my_plugins"
-
-if [ ! -d ${plugin_dir}/Vundle.vim ]; then
-  eval git clone https://github.com/gmarik/Vundle.vim.git ${plugin_dir}/Vundle.vim
-  eval sed -i "s#.vim/bundle#.vim_runtime/my_plugins#g" ${plugin_dir}/Vundle.vim/autoload/vundle.vim
+echo "Installing vim-plug"
+autoload_path="autoload"
+if [ ! -f "$autoload_path/plug.vim" ]; then
+    exec curl -fLo ${autoload_path}/plug.vim --create-dirs \
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
 echo 'set runtimepath+=~/.vim_runtime
