@@ -1,7 +1,8 @@
 " Specify a directory for plugins
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
-call plug#begin('~/.vim_runtime/my_plugins')
+let s:vim_runtime = expand('<sfile>:p:h')."/.."
+call plug#begin(s:vim_runtime.'/my_plugins')
 
 " Make sure you use single quotes
 
@@ -33,6 +34,10 @@ call plug#begin('~/.vim_runtime/my_plugins')
 " Unmanaged plugin (manually installed and updated)
 " Plug '~/my-prototype-plugin'
 
+Plug 'dracula/vim'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'preservim/vim-indent-guides'
+Plug 'tpope/vim-rhubarb'
 Plug 'godlygeek/tabular'
 Plug 'tpope/vim-abolish'
 Plug 'farmergreg/vim-lastplace'

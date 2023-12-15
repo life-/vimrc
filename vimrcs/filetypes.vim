@@ -26,11 +26,11 @@ au FileType javascript call JavaScriptFold()
 au FileType javascript setl fen
 au FileType javascript setl nocindent
 
-au FileType javascript imap <C-t> $log();<esc>hi
-au FileType javascript imap <C-a> alert();<esc>hi
+au FileType javascript,typescript imap <C-t> console.log();<esc>hi
+au FileType javascript,typescript imap <C-a> alert();<esc>hi
 
-au FileType javascript inoremap <buffer> $r return 
-au FileType javascript inoremap <buffer> $f // --- PH<esc>FP2xi
+au FileType javascript,typescript inoremap <buffer> $r return 
+au FileType javascript,typescript inoremap <buffer> $f // --- PH<esc>FP2xi
 
 function! JavaScriptFold() 
     setl foldmethod=syntax
@@ -78,3 +78,9 @@ autocmd BufRead *.twig set syntax=html filetype=html
 " => Markdown
 """"""""""""""""""""""""""""""
 let vim_markdown_folding_disabled = 1
+
+
+""""""""""""""""""""""""""""""
+" => YAML
+""""""""""""""""""""""""""""""
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab

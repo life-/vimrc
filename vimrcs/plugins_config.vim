@@ -6,6 +6,12 @@
 
 
 """"""""""""""""""""""""""""""
+" => Enable native vim packages as described in the README
+""""""""""""""""""""""""""""""
+set packpath+=~/.vim_runtime
+
+
+""""""""""""""""""""""""""""""
 " => Load pathogen paths
 """"""""""""""""""""""""""""""
 let s:vim_runtime = expand('<sfile>:p:h')."/.."
@@ -69,7 +75,7 @@ let g:user_zen_mode='a'
 """"""""""""""""""""""""""""""
 ino <C-j> <C-r>=snipMate#TriggerSnippet()<cr>
 snor <C-j> <esc>i<right><C-r>=snipMate#TriggerSnippet()<cr>
-let g:snipMate = { 'snippet_version' : 1  }
+let g:snipMate = { 'snippet_version' : 1 }
 
 
 """"""""""""""""""""""""""""""
@@ -152,7 +158,7 @@ nnoremap <silent> <leader>z :Goyo<cr>
 " => Ale (syntax checker and linter)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ale_linters = {
-\   'javascript': ['jshint'],
+\   'javascript': ['eslint'],
 \   'python': ['flake8'],
 \   'go': ['go', 'golint', 'errcheck']
 \}
@@ -165,6 +171,7 @@ let g:ale_set_highlights = 0
 " Only run linting when saving the file
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
+let g:ale_virtualtext_cursor = 'disabled'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -172,3 +179,17 @@ let g:ale_lint_on_enter = 0
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:gitgutter_enabled=0
 nnoremap <silent> <leader>d :GitGutterToggle<cr>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => EditorConfig (project-specific EditorConfig rule)
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Fugitive
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Copy the link to the line of a Git repository to the clipboard
+nnoremap <leader>v :.GBrowse!<CR>
+xnoremap <leader>v :GBrowse!<CR>
